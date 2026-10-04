@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Typography per the State of Qatar Master Brand Guidelines: Lusail is the primary government typeface and
+ * Calibri is the approved fallback for web applications. Lusail is licensed for government use only and is
+ * not bundled — it is used automatically when installed on the user's device.
+ */
+@layer base {
+  html { font-family: Lusail, Calibri, Carlito, 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { @apply bg-canvas text-gray-900; }
+}
+
+@layer components {
+  /* Tabular, right-aligned figures: the standard for financial statements. */
+  .num { font-variant-numeric: tabular-nums lining-nums; }
+
+  /* :where() keeps base specificity low so Tailwind utilities (text-left, bg-*) always win. */
+  .fin-table { @apply border-collapse text-[13px]; font-variant-numeric: tabular-nums; }
+  .fin-table :where(th) {
+    @apply whitespace-nowrap border-b border-gray-200 bg-gray-50 px-3 py-2.5 text-right text-[11px] font-semibold uppercase tracking-wide text-gray-500;
+  }
+  .fin-table :where(td) { @apply whitespace-nowrap border-b border-gray-100 px-3 py-2 text-right align-middle; }
+  .fin-table :where(tbody tr:hover td) { @apply bg-gray-50/60; }
+  .fin-table :where(tfoot td) { @apply border-t-2 border-brand/30 bg-gray-50 py-2.5 font-semibold text-gray-900; }
+  .fin-table :where(.group-row td) { @apply bg-gray-50 py-1.5 text-[11px] font-bold uppercase tracking-wide text-gray-700; }
+  .fin-table :where(.subtotal-row td) { @apply border-b-gray-200 bg-[#FBFBFC] font-semibold text-gray-800; }
+  .entry-table :where(td) { @apply py-1; }
+
+  .animate-page { animation: page-in 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  .animate-fade { animation: fade-in 200ms ease-out both; }
+  .animate-slide { animation: slide-in 260ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+}
+
+@keyframes page-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-in { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-page, .animate-fade, .animate-slide { animation: none; }
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #D0D5DD; border-radius: 8px; border: 2px solid #F6F7F9; }
+::-webkit-scrollbar-track { background: transparent; }
+
+@media print {
+  aside, header nav, header label, header button { display: none !important; }
+  .shadow-card { box-shadow: none !important; }
+}
